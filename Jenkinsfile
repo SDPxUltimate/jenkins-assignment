@@ -27,8 +27,12 @@ pipeline{
                 sh 'docker run -dp 5000:5000 --name ${APP_NAME} ${IMAGE_NAME}:${BUILD_ID}'
                 git branch: '$ROBOT_BRANCH', url: '$ROBOT_REPO'
                 sh 'robot plus.robot'
-                sh 'docker stop ${APP_NAME} || true'
-                sh 'docker rm ${APP_NAME} || true'
+            }
+            post {
+                always {
+                    sh 'docker stop ${APP_NAME} || true'
+                    sh 'docker rm ${APP_NAME} || true'
+                }
             }
         }
         stage('Push Image to Registry'){
