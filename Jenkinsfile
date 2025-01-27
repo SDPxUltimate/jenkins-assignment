@@ -21,12 +21,12 @@ pipeline{
                 sh "docker build -t ${IMAGE_NAME}:${BUILD_ID} ."
             }
         }
-        // stage("Run Container & Run Robot Testing"){
-        //     steps{
-        //         sh "docker run -dp 5000:5000 ${IMAGE_NAME}:${BUILD_ID}"
-        //         git url: "${ROBOT_REPO}", branch: "${ROBOT_BRANCH}"
-        //     }
-        // }
+        stage("Run Container & Run Robot Testing"){
+            steps{
+                sh "docker run -dp 5000:5000 ${IMAGE_NAME}:${BUILD_ID}"
+                git url: "${ROBOT_REPO}", branch: "${ROBOT_BRANCH}"
+            }
+        }
 
     }
 }
