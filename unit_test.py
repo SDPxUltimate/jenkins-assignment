@@ -5,7 +5,7 @@ from app import app
 class AppTestCase(unittest.TestCase):
 
     def test_plus_0_0(self):
-        response, status_code = app.plus("3", "0")
+        response, status_code = app.plus("0", "0")
         self.assertEqual(response.json, {"result": 0})
         self.assertEqual(status_code, 200)
 
