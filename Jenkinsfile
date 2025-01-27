@@ -3,7 +3,7 @@ pipeline{
         label "test-agent"
     }
     environment{
-        IMAGE_NAME = "ghcr.io/xultimate/jenkins-assignment"
+        IMAGE_NAME = "ghcr.io/sdpxultimate/jenkins-assignment"
         REGISTRY_CREDENTIALS_NAME = "ghcr-credentials"
         REGISTRY_URL = "https://ghcr.io"
         APP_NAME = "web-api"
