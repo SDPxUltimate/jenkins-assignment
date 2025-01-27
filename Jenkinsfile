@@ -27,12 +27,35 @@ pipeline{
         //         git url: "${ROBOT_REPO}", branch: "${ROBOT_BRANCH}"
         //     }
         // }
-        stage("Push Image To Registry"){
+        stage("Push Image to Registry"){
             steps{
                 sh "echo ${REGISTRY_CREDENTIALS_PSW}  | docker login ghcr.io -u ${REGISTRY_CREDENTIALS_USR} --password-stdin"
                 sh "docker push ${IMAGE_NAME}:${BUILD_ID}"
             }
         }
-
+        stage("Pull Image from Registry"){
+            agent{
+                label "pre-prod-agent"
+            }
+            steps{
+                sh "echo ${REGISTRY_CREDENTIALS_PSW}  | docker login ghcr.io -u ${REGISTRY_CREDENTIALS_USR} --password-stdin"
+                sh "docker pull ${IMAGE_NAME}:${BUILD_ID}"
+            }
+        }
+        stage("Clean & Run Docker Image"){
+            agent{
+                label "pre-prod-agent"
+            }
+            steps{
+                sh "docker stop ${APP_NAME}"
+                sh "docker rm ${APP_NAME}"
+                sh "docker run -dp 5000:5000 ${IMAGE_NAME}:${BUILD_ID}"
+            }
+        }
+    }
+    post{
+        always{
+            sh "docker system prune -af"
+        }
     }
 }
