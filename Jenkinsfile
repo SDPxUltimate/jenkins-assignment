@@ -2,28 +2,31 @@ pipeline{
     agent{
         label "test-agent"
     }
+    environment{
+        IMAGE_NAME = "ghcr.io/xultimate/jenkins-assignment"
+        REGISTRY_CREDENTIALS_NAME = "ghcr-credentials"
+        REGISTRY_URL = "https://ghcr.io"
+        APP_NAME = "web-api"
+        ROBOT_REPO = "https://github.com/SDPxUltimate/jenkins-robot"
+    }
     stages{
-        stage("A"){
-            agent any
+        stage("Install & Run Unittest"){
             steps{
-                sh "pwd"
-                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL} at node ${env.NODE_NAME}"
+                sh "pip install -r requirements.txt"
+                sh "python3 unit_test.py"
             }
         }
-        stage("B"){
-            agent{
-                label "pre-prod-agent"
-            }
+        stage("Create Image"){
             steps{
-                sh "pwd"
-                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL} at node ${env.NODE_NAME}"
+                sh "docker build -t ${IMAGE_NAME}:${BUILD_ID} ."
             }
         }
-        stage("C"){
-            steps{
-                sh "pwd"
-                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL} at node ${env.NODE_NAME}"
-            }
-        }
+        // stage("Run Container & Run Robot Testing"){
+        //     steps{
+        //         sh "docker run -dp 5000:5000 ${IMAGE_NAME}:${BUILD_ID}"
+        //         git url: "${ROBOT_REPO}", branch: "${ROBOT_BRANCH}"
+        //     }
+        // }
+
     }
 }
