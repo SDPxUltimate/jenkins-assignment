@@ -7,7 +7,7 @@ pipeline{
             agent any
             steps{
                 sh "pwd"
-                echo "========executing A========"
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL} at node ${env.NODE_NAME}"
             }
         }
         stage("B"){
@@ -16,13 +16,13 @@ pipeline{
             }
             steps{
                 sh "pwd"
-                echo "========executing B========"
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL} at node ${env.NODE_NAME}"
             }
         }
         stage("C"){
             steps{
                 sh "pwd"
-                echo "========executing C========"
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL} at node ${env.NODE_NAME}"
             }
         }
     }
