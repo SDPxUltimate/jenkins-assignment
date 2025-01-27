@@ -1,5 +1,6 @@
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify 
+
 
 app = Flask(__name__)
 
@@ -10,19 +11,24 @@ def getcode():
 
 @app.route('/plus/<num1>/<num2>', methods=['GET'])
 def plus(num1, num2):
-    try:
-        num1 = int(num1)
-        num2 = int(num2)
-
-        results = { 'result' : num1 + num2}
-        
-    except:
-        results = { 'error_msg' : 'inputs must be numbers' }
-
     with app.app_context():
+        try:
+            num1 = float(num1)
+            num2 = float(num2)
+            ans = num1 + num2
+            if ans.is_integer():
+                ans = int(ans)
+            results = { 'result' : ans}
+
+        except:
+            results = { 'error_msg' : 'inputs must be numbers' }
+            res = jsonify(results)
+            return res, 400
+
+        
         res = jsonify(results)
         
-    return res
+        return res
 
 
 if __name__ == '__main__':
