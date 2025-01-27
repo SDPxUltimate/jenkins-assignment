@@ -49,7 +49,7 @@ pipeline{
             steps{
                 sh "docker stop ${APP_NAME} || true"
                 sh "docker rm ${APP_NAME} || true"
-                sh "docker run -dp 5000:5000 ${IMAGE_NAME}:${BUILD_ID}"
+                sh "docker run -dp 5001:5000 ${IMAGE_NAME}:${BUILD_ID} --name ${APP_NAME}"
             }
         }
     }
