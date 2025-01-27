@@ -35,7 +35,7 @@ pipeline {
 
             post {
                 always {
-                    sh reternStatus: true, script: "docker stop ${APP_NAME}"
+                    sh returnStatus: true, script: "docker stop ${APP_NAME}"
                     sh returnStatus: true, script: "docker rm ${APP_NAME}"
                 }
             }
