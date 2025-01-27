@@ -8,6 +8,7 @@ pipeline{
         REGISTRY_URL = 'https://ghcr.io'
         APP_NAME = 'web-api'
         ROBOT_REPO = 'https://github.com/SDPxUltimate/jenkins-robot'
+        ROBOT_BRANCH = 'develop'
     }
     stages{
         stage('Install & Run Unittest'){
@@ -21,12 +22,15 @@ pipeline{
                 sh 'docker build -t ${IMAGE_NAME}:${BUILD_ID} .'
             }
         }
-        // stage('Run Container & Run Robot Testing'){
-        //     steps{
-        //         sh 'docker run -dp 5000:5000 ${IMAGE_NAME}:${BUILD_ID}'
-        //         git url: '${ROBOT_REPO}', branch: '${ROBOT_BRANCH}'
-        //     }
-        // }
+        stage('Run Container & Run Robot Testing'){
+            steps{
+                sh 'docker stop ${APP_NAME} || true'
+                sh 'docker rm ${APP_NAME} || true'
+                sh 'docker run -dp 5000:5000 --name ${APP_NAME} ${IMAGE_NAME}:${BUILD_ID}'
+                git url: '${ROBOT_REPO}', branch: '${ROBOT_BRANCH}'
+                sh 'robot plus.robot'
+            }
+        }
         stage('Push Image to Registry'){
             steps{
                 sh 'echo $REGISTRY_CREDENTIALS_PSW  | docker login ghcr.io -u $REGISTRY_CREDENTIALS_USR --password-stdin'
