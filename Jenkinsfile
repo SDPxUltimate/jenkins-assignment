@@ -14,12 +14,12 @@ pipeline{
                 label "pre-prod-agent"
             }
             steps{
-                echo "========executing A========"
+                echo "========executing B========"
             }
         }
         stage("C"){
             steps{
-                echo "========executing A========"
+                echo "========executing C========"
             }
         }
     }
