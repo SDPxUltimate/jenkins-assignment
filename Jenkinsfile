@@ -4,7 +4,7 @@ pipeline{
     }
     environment{
         IMAGE_NAME = "ghcr.io/sdpxultimate/jenkins-assignment"
-        REGISTRY_CREDENTIALS_NAME = "ghcr-credentials"
+        REGISTRY_CREDENTIALS = credentials("ghcr-credentials")
         REGISTRY_URL = "https://ghcr.io"
         APP_NAME = "web-api"
         ROBOT_REPO = "https://github.com/SDPxUltimate/jenkins-robot"
@@ -21,10 +21,16 @@ pipeline{
                 sh "docker build -t ${IMAGE_NAME}:${BUILD_ID} ."
             }
         }
-        stage("Run Container & Run Robot Testing"){
+        // stage("Run Container & Run Robot Testing"){
+        //     steps{
+        //         sh "docker run -dp 5000:5000 ${IMAGE_NAME}:${BUILD_ID}"
+        //         git url: "${ROBOT_REPO}", branch: "${ROBOT_BRANCH}"
+        //     }
+        // }
+        stage("Push Image To Registry"){
             steps{
-                sh "docker run -dp 5000:5000 ${IMAGE_NAME}:${BUILD_ID}"
-                git url: "${ROBOT_REPO}", branch: "${ROBOT_BRANCH}"
+                sh "echo ${REGISTRY_CREDENTIALS_PSW}  | docker login ghcr.io -u ${REGISTRY_CREDENTIALS_USR} --password-stdin"
+                sh "docker push ${IMAGE_NAME}:${BUILD_ID}"
             }
         }
 
