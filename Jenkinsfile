@@ -25,7 +25,7 @@ pipeline{
         stage('Run Container & Run Robot Testing'){
             steps{
                 sh 'docker run -dp 5000:5000 --name ${APP_NAME} ${IMAGE_NAME}:${BUILD_ID}'
-                git branch: '$ROBOT_BRANCH', url: '$ROBOT_REPO'
+                git branch: env.ROBOT_BRANCH, url: env.ROBOT_REPO
                 sh 'robot plus.robot'
             }
             post {
