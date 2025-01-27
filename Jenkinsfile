@@ -5,6 +5,7 @@ pipeline{
     environment{
         IMAGE_NAME = 'ghcr.io/sdpxultimate/jenkins-assignment'
         REGISTRY_CREDENTIALS = credentials('ghcr-credentials')
+        ROBOT_CREDENTIALS = 'github-kitton-pat'
         REGISTRY_URL = 'https://ghcr.io'
         APP_NAME = 'web-api'
         ROBOT_REPO = 'https://github.com/SDPxUltimate/jenkins-robot.git'
@@ -27,7 +28,7 @@ pipeline{
                 sh 'docker stop ${APP_NAME} || true'
                 sh 'docker rm ${APP_NAME} || true'
                 sh 'docker run -dp 5000:5000 --name ${APP_NAME} ${IMAGE_NAME}:${BUILD_ID}'
-                git url: '${ROBOT_REPO}', branch: '${ROBOT_BRANCH}'
+                git credentialsId:'${ROBOT_CREDENTIALS}' url: '${ROBOT_REPO}', branch: '${ROBOT_BRANCH}'
                 sh 'robot plus.robot'
             }
         }
