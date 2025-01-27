@@ -7,7 +7,7 @@ pipeline{
         REGISTRY_CREDENTIALS = credentials('ghcr-credentials')
         REGISTRY_URL = 'https://ghcr.io'
         APP_NAME = 'web-api'
-        ROBOT_REPO = 'https://github.com/SDPxUltimate/jenkins-robot'
+        ROBOT_REPO = 'https://github.com/SDPxUltimate/jenkins-robot.git'
         ROBOT_BRANCH = 'develop'
     }
     stages{
