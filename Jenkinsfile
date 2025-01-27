@@ -6,6 +6,7 @@ pipeline{
         stage("A"){
             agent any
             steps{
+                sh "pwd"
                 echo "========executing A========"
             }
         }
@@ -14,11 +15,13 @@ pipeline{
                 label "pre-prod-agent"
             }
             steps{
+                sh "pwd"
                 echo "========executing B========"
             }
         }
         stage("C"){
             steps{
+                sh "pwd"
                 echo "========executing C========"
             }
         }
