@@ -28,9 +28,7 @@ pipeline{
                 sh 'docker rm ${APP_NAME} || true'
                 sh 'docker run -dp 5000:5000 --name ${APP_NAME} ${IMAGE_NAME}:${BUILD_ID}'
                 git branch: 'main', url: 'https://github.com/sdpxultimate/jenkins-robot'
-                sh 'export PATH=$PATH:~/.local/bin'
-                sh 'robot --version'
-                sh 'robot plus.robot'
+                sh 'python3 -m robot plus.robot'
             }
         }
         stage('Push Image to Registry'){
