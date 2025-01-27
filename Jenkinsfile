@@ -29,7 +29,7 @@ pipeline{
         // }
         stage("Push Image to Registry"){
             steps{
-                sh "echo $REGISTRY_CREDENTIALS_PSW  | docker login ghcr.io -u $REGISTRY_CREDENTIALS_USR --password-stdin"
+                sh 'echo $REGISTRY_CREDENTIALS_PSW  | docker login ghcr.io -u $REGISTRY_CREDENTIALS_USR --password-stdin'
                 sh "docker push ${IMAGE_NAME}:${BUILD_ID}"
             }
         }
@@ -38,7 +38,7 @@ pipeline{
                 label "pre-prod-agent"
             }
             steps{
-                sh "echo $REGISTRY_CREDENTIALS_PSW  | docker login ghcr.io -u $REGISTRY_CREDENTIALS_USR --password-stdin"
+                sh 'echo $REGISTRY_CREDENTIALS_PSW  | docker login ghcr.io -u $REGISTRY_CREDENTIALS_USR --password-stdin'
                 sh "docker pull ${IMAGE_NAME}:${BUILD_ID}"
             }
         }
@@ -49,7 +49,7 @@ pipeline{
             steps{
                 sh "docker stop ${APP_NAME} || true"
                 sh "docker rm ${APP_NAME} || true"
-                sh "docker run -dp 5001:5000 ${IMAGE_NAME}:${BUILD_ID} --name ${APP_NAME}"
+                sh "docker run -dp 5001:5000 --name ${APP_NAME} ${IMAGE_NAME}:${BUILD_ID}"
             }
         }
     }
