@@ -28,7 +28,7 @@ pipeline{
                 sh 'docker stop ${APP_NAME} || true'
                 sh 'docker rm ${APP_NAME} || true'
                 sh 'docker run -dp 5000:5000 --name ${APP_NAME} ${IMAGE_NAME}:${BUILD_ID}'
-                git credentialsId:'${ROBOT_CREDENTIALS}' url: '${ROBOT_REPO}', branch: '${ROBOT_BRANCH}'
+                git credentialsId:'${ROBOT_CREDENTIALS}', url: '${ROBOT_REPO}', branch: '${ROBOT_BRANCH}'
                 sh 'robot plus.robot'
             }
         }
