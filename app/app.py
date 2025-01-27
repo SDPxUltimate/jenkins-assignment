@@ -28,7 +28,7 @@ def plus(num1, num2):
         
         res = jsonify(results)
         
-        return res
+        return res, 200
 
 
 if __name__ == '__main__':
