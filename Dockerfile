@@ -6,7 +6,7 @@ COPY ./requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-FROM python:3.7-slim AS production
+FROM python:3.7-alpine AS production
 
 WORKDIR /app
 
