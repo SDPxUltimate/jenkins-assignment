@@ -1,9 +1,19 @@
-FROM python:3.7-alpine
+FROM python:3.7-alpine AS builder
+
 WORKDIR /app
-ENV FLASK_APP=app/app.py
-ENV FLASK_RUN_HOST=0.0.0.0
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-EXPOSE 5000
+
+COPY ./requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+FROM python:3.7-alpine AS production
+
+WORKDIR /app
+
+COPY --from=builder /usr/local/lib/python3.7/site-packages /usr/local/lib/python3.7/site-packages
+
 COPY . .
-CMD ["flask", "run"]
+
+EXPOSE 5000
+
+CMD ["python", "app/app.py"]
