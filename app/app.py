@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/getcode', methods=['GET'])
 def getcode():
-    return "gitton nimble za 007 55 EZ xdxd"
+    return "gitton nimble za 007 55 EZ gg xdxd"
 
 
 @app.route('/plus/<num1>/<num2>', methods=['GET'])
