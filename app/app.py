@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/getcode', methods=['GET'])
 def getcode():
-    return "hello, world!"
+    return "Hello, world!"
 
 
 @app.route('/plus/<num1>/<num2>', methods=['GET'])
