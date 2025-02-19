@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/getcode', methods=['GET'])
 def getcode():
-    return "kitton nimble za 007x 55 xdxd ez So this code is very secret and you should not share it with anyone"
+    return "333"
 
 
 @app.route('/plus/<num1>/<num2>', methods=['GET'])
