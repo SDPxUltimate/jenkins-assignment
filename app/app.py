@@ -8,6 +8,25 @@ app = Flask(__name__)
 def getcode():
     return "333"
 
+@app.route('/is_prime/<num>', methods=['GET'])
+def is_prime(num):
+    with app.app_context():
+        try:
+            num = int(num)
+            if num < 2:
+                results = "false"
+            else:
+                results = "true"
+                for i in range(2, int(num**0.5)+1):
+                    if num % i == 0:
+                        results = "false"
+                        break
+        except:
+            results = { 'error_msg' : 'input must be a number' }
+            return results, 400
+        
+        return results , 200
+
 
 @app.route('/plus/<num1>/<num2>', methods=['GET'])
 def plus(num1, num2):

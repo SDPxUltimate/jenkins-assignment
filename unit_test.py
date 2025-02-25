@@ -4,6 +4,21 @@ from app import app
 
 class AppTestCase(unittest.TestCase):
 
+    def test_true_when_x_is_17(self):
+        response, status_code = app.is_prime("17")
+        self.assertEqual(response, "true")
+        self.assertEqual(status_code, 200)
+        
+    def test_false_when_x_is_36(self):
+        response, status_code = app.is_prime("36")
+        self.assertEqual(response, "false")
+        self.assertEqual(status_code, 200)
+        
+    def test_true_when_x_is_13219(self):
+        response, status_code = app.is_prime("13219")
+        self.assertEqual(response, "true")
+        self.assertEqual(status_code, 200)
+        
     def test_plus_0_0(self):
         response, status_code = app.plus("0", "0")
         self.assertEqual(response.json, {"result": 0})
