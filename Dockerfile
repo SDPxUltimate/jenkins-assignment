@@ -14,6 +14,6 @@ COPY --from=builder /usr/local/lib/python3.7/site-packages /usr/local/lib/python
 
 COPY . .
 
-EXPOSE 5000
+EXPOSE 5001
 
 CMD ["python", "app/app.py"]
