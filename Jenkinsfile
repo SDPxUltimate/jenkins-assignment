@@ -27,7 +27,7 @@ pipeline {
 
         stage('Run Container & Run Robot Testing') {
             steps {
-                sh "docker run -dp 5000:5000 --name ${APP_NAME} ${IMAGE_NAME}:${BUILD_ID}"
+                sh "docker run -dp 5001:5001 --name ${APP_NAME} ${IMAGE_NAME}:${BUILD_ID}"
                 git branch: "${ROBOT_BRANCH}", url: "${ROBOT_REPO}"
                 sh "robot plus.robot"
             }
@@ -55,7 +55,7 @@ pipeline {
                 sh returnStatus: true, script: "docker stop ${APP_NAME}"
                 sh returnStatus: true, script: "docker rm ${APP_NAME}"
                 sh 'echo $REGISTRY_CREDENTIALS_PSW  | docker login ghcr.io -u $REGISTRY_CREDENTIALS_USR --password-stdin'
-                sh "docker run -dp 5001:5000 --name ${APP_NAME} ${IMAGE_NAME}:${BUILD_ID}"
+                sh "docker run -dp 5001:5001 --name ${APP_NAME} ${IMAGE_NAME}:${BUILD_ID}"
             }
         }
     }

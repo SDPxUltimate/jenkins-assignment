@@ -14,18 +14,21 @@ def is_prime(num):
         try:
             num = int(num)
             if num < 2:
-                results = "false"
+                results = False
             else:
-                results = "true"
+                results = True
                 for i in range(2, int(num**0.5)+1):
                     if num % i == 0:
-                        results = "false"
+                        results = False
                         break
         except:
             results = { 'error_msg' : 'input must be a number' }
+            res = jsonify(results)
             return results, 400
+
+        resp = jsonify(results)
         
-        return results , 200
+        return resp, 200
 
 
 @app.route('/plus/<num1>/<num2>', methods=['GET'])
@@ -51,5 +54,5 @@ def plus(num1, num2):
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5001)
 
