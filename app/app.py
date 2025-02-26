@@ -30,6 +30,24 @@ def is_prime(num):
         
         return resp, 200
 
+@app.route('/cir_sur/<num>', methods=['GET'])
+def cir_sur(num):
+    with app.app_context():
+        try:
+            num = float(num)
+            if num < 0:
+                results = 0.00
+            else:
+                results = 4 * 3.14 * pow(num, 2)
+        except:
+            results = { 'error_msg' : 'input must be a number' }
+            res = jsonify(results)
+            return results, 400
+
+        resp = jsonify(results)
+        
+        return resp, 200
+
 
 @app.route('/plus/<num1>/<num2>', methods=['GET'])
 def plus(num1, num2):
